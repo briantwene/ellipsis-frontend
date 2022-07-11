@@ -28,20 +28,26 @@ const AuthProvider = ({ children }) => {
 
   //sign in function
   const signIn = async (userData) => {
-    const response = await axiosInstance
-      .post("users/sign-in", {
-        ...userData
-      })
-      .catch((e) => {
+    try {
+      const response = await axiosInstance
+        .post("users/sign-in", {
+          ...userData
+        })
+        .catch((e) => {});
+
+      const freshAuthData = response.data;
+
+      const jsonValue = JSON.stringify(freshAuthData);
+      await AsyncStorage.setItem("@AuthData", jsonValue);
+      setAuthData(freshAuthData);
+    } catch (e) {
+      if (err.response) {
+        console.log(err.response.status);
+        console.log(err.response.data);
+      } else {
         console.log("there was an error:", e);
-      });
-
-    const freshAuthData = response.data;
-    console.log("freshAuthData", freshAuthData);
-
-    const jsonValue = JSON.stringify(freshAuthData);
-    await AsyncStorage.setItem("@AuthData", jsonValue);
-    setAuthData(freshAuthData);
+      }
+    }
   };
 
   //sign out function
@@ -67,7 +73,6 @@ const useAuth = () => {
     throw new Error("useAuth must be used within an AuthProvider");
   }
 
-  console.log("context", context);
   //if there is, return the context
   return context;
 };

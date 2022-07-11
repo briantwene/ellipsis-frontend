@@ -4,7 +4,7 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { AuthProvider } from "./context/authContext";
 import BaseNavigator from "./navigator/BaseNavigator";
-
+import { SocketProvider } from "./context/socketContext";
 import Chat from "./screens/Chat";
 import Conversations from "./screens/Conversations";
 import Friends from "./screens/Friends";
@@ -14,9 +14,11 @@ export default function App() {
   return (
     <>
       <AuthProvider>
-        <NavigationContainer>
-          <BaseNavigator />
-        </NavigationContainer>
+        <SocketProvider>
+          <NavigationContainer>
+            <BaseNavigator />
+          </NavigationContainer>
+        </SocketProvider>
       </AuthProvider>
     </>
   );

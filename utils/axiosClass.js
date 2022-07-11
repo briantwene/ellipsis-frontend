@@ -12,7 +12,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async (config) => {
     const authData = await AsyncStorage.getItem("@AuthData");
-    console.log("axiosAuth", authData);
+
     const parsed = JSON.parse(authData);
     if (parsed !== null) {
       config.headers = {

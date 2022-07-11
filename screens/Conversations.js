@@ -10,7 +10,7 @@ import axiosInstance from "../utils/axiosClass";
 
 const Stack = createNativeStackNavigator();
 
-export default function Conversations({ navigation }) {
+export default function Conversations({ navigation, sendMsg }) {
   const [conversationsList, setConversationsList] = useState([]);
   const { authData } = useAuth();
 
@@ -22,6 +22,7 @@ export default function Conversations({ navigation }) {
   };
 
   const onPressConversation = (info, name = "") => {
+    console.log("info", info);
     navigation.navigate("Chat", { ...info, name });
   };
 
@@ -32,7 +33,6 @@ export default function Conversations({ navigation }) {
   return (
     <>
       <View style={styles.conversations}>
-        {console.log(conversationsList)}
         <FlatList
           data={conversationsList}
           renderItem={(item, index) => {

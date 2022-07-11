@@ -5,12 +5,15 @@ import Conversations from "../screens/Conversations";
 import Friends from "../screens/Friends";
 import Profile from "../screens/Profile";
 import Calls from "../screens/Calls";
+import { useAuth } from "../context/authContext";
 const Tabs = createBottomTabNavigator();
 
 export default function HomeTabs() {
   return (
     <Tabs.Navigator>
-      <Tabs.Screen name="Conversations" component={Conversations} />
+      <Tabs.Screen name="Conversations">
+        {(props) => <Conversations {...props} />}
+      </Tabs.Screen>
       <Tabs.Screen name="Calls" component={Calls} />
       <Tabs.Screen name="Friends" component={Friends} />
       <Tabs.Screen name="Profile" component={Profile} />
